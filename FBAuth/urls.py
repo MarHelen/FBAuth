@@ -1,13 +1,11 @@
-
 from django.conf.urls.static import static
 from django.conf import settings
-from django.conf.urls import patterns
 
-from FBAuth.views import *
+from . import views
 
 from django.conf.urls import include, url
+from django.conf.urls import patterns
 from django.contrib import admin
-
 admin.autodiscover()
 
 urlpatterns = patterns(

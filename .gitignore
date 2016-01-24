@@ -3,3 +3,5 @@ Lib/*
 myvenv/*
 Scripts/*
 pyvenv.cfg
+*.pyc
+config.py
