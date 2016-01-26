@@ -6,6 +6,9 @@ from . import views
 from django.conf.urls import include, url
 from django.conf.urls import patterns
 from django.contrib import admin
+
+from FBLogin.config import *
+
 admin.autodiscover()
 
 urlpatterns = patterns(
@@ -16,4 +19,8 @@ urlpatterns = patterns(
     url(r'^$', 'FBAuth.views.login'),
     url(r'^home/$', 'FBAuth.views.home'),
     url(r'^logout/$', 'FBAuth.views.logout'),
+    url(r'^new_user/$', 'FBAuth.views.home', {'new_user' : 1}),
+    url(r'^succeeded/$', 'FBAuth.views.home', {'new_user' : 2}),
+    url(r'^signup_confirm/$', 'FBAuth.views.signup_confirm'),
+    url(r'^login_error/$', 'FBAuth.views.login', {'message' : 'Error while attempt to login'}),
 )
