@@ -14,7 +14,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 
 from config import *
-from FBAuth.facebook import *
+#from FBAuth.facebook import *
 
 
 
@@ -60,7 +60,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
-    'social_auth.middleware.SocialAuthExceptionMiddleware',
+    'FBLogin.middleware.SocialAuthExceptionMiddleware',
+    #'social_auth.middleware.SocialAuthExceptionMiddleware',
 )
 
 
@@ -75,7 +76,7 @@ ROOT_URLCONF = 'FBLogin.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS':  [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,32 +133,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'social.apps.django_app.context_processors.backends',
-                'social.apps.django_app.context_processors.login_redirect',   
-                
-            ],
-        },
-    },
-]
-
-
-
 SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
 SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
 FIELDS_STORED_IN_SESSION = ['login_type']
 LOGIN_ERROR_URL = '/login_error/'
+SOCIAL_AUTH_RAISE_EXCEPTIONS = True
+RAISE_EXCEPTIONS = True
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/succeeded/'
+SOCIAL_AUTH_LOGIN_URL = '/home/'
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/new_user/'
+
+SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/new_user/'
 
 
 SOCIAL_AUTH_PIPELINE = (
@@ -165,12 +154,15 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.social_uid',
     'social.pipeline.social_auth.auth_allowed',
     'social.pipeline.social_auth.social_user',
-    'FBLogin.facebook.check_if_exists',     
+    'FBAuth.facebook.check_if_exists',     
     'social.pipeline.user.get_username',
     'social.pipeline.user.create_user',
     'social.pipeline.social_auth.associate_user',
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details',
+    #'FBAuth.facebook.last_check',
 )
+
+
 
 

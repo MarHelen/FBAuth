@@ -7,7 +7,12 @@ from django.template.context import RequestContext
 
 from django.core.urlresolvers import reverse
 
-def login(request, message = None):
+def login(request, new_user = None, message = None):
+    if new_user:
+        if new_user == 1: #new one
+            message = 'Wellcome to our app!'
+        if new_user == 2: #loggined
+            message = "Successfully logged in"    
     context = RequestContext(request, {
          'request': request, 'user': request.user, 'message' : message})
     return render_to_response('login.html', context_instance=context)
