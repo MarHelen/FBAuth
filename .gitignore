@@ -9,4 +9,5 @@ debug.log
 __pycache__/*
 
 */__pycache__/*
+FBLogin/__pycache__/*
 
