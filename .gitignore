@@ -6,3 +6,7 @@ pyvenv.cfg
 *.pyc
 config.py
 debug.log
+__pycache__/*
+
+*/__pycache__/*
+
