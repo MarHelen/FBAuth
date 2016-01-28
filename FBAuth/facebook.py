@@ -6,23 +6,33 @@ from social.exceptions import AuthCanceled, AuthAlreadyAssociated #social_auth.e
 #from social_auth.exceptions import AuthAlreadyAssociated, AuthCanceled 
 #from social_auth.middleware import SocialAuthExceptionMiddleware
 
+#log = logging.getLogger('logentries')
+#log.setLevel(logging.INFO)
+import logging
+logger = logging.getLogger(__name__)
+
+# import the logging library
+#import logging
+
+
 #from social.pipeline.partial import partial
 
-def check_if_exists(strategy, *args, **kwargs):
+def check_if_exists(strategy,  request, *args, **kwargs):
     #request = kwargs.get('request')
+    login_type = strategy.request.GET.get('login_type')
+    #login_type = strategy.session_get('key')
+    #login_type = request['login_type']
+    #login_type = strategy.request['login_type']
+    logger.debug("is_new parameter is %s", kwargs['is_new'])
+    logger.debug("login_type is %s", login_type)
     if kwargs['is_new']:
-        if strategy.request.GET.get('login_type') == 1:  #need to add message
-            raise AuthCanceled
+        if login_type == 1:  #need to add message
+            return redirect('/', message ='Specified social account is not yet associate with any existent user, try to Sign up first')
+            #raise AuthCanceled
     else: 
-        if strategy.request.GET.get('login_type') == 2: 
-            raise AuthAlreadyAssociated          #need to add message
-            #return redirect('login', message = 'User for this account is already exist, try to login')
+        if login_type == 2: 
+            #raise AuthAlreadyAssociated          #need to add message
+            return redirect('/', message = 'User for this account is already exist, try to login')
             #raise AuthAlreadyAssociated
     return None
-
-"""
-def last_check(strategy, user, *args, **kwargs):
-    if user.last_login != user.date_joined:
-        redirect('/new_user')
-    else:
-   """     
+       

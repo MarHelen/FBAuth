@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 {% block main %}
  <div class="container">
- <h1  >Facebook authentication</h1>
+ <h1 >Facebook authentication</h1>
 <p>
 
    {% if user and not user.is_anonymous %}
@@ -21,7 +21,7 @@
      {% endif %}
      <div class="container">
      <div  class="col-md-4">
-       <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}?login_type=2"><img src='http://www.arcadeforge.io/assets/facebook_login-30508b4234d64d8a7294e2d32598137aad5a43ac7026ac419e05bd8c41c4b849.png'>  </a>
+       <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}?login_type=1"><img src='http://www.arcadeforge.io/assets/facebook_login-30508b4234d64d8a7294e2d32598137aad5a43ac7026ac419e05bd8c41c4b849.png'>  </a>
      </div>
      <div class="col-md-4">
        <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}?login_type=2"><img src='http://active.eventjini.com/jaipurmarathon/images/signup_fb.png'></a>

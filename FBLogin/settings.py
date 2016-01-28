@@ -14,7 +14,11 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 
 from config import *
-#from FBAuth.facebook import *
+
+#from logentries import LogentriesHandler
+import logging
+
+
 
 
 
@@ -96,11 +100,85 @@ TEMPLATES = [
     },
 ]
 
+"""
+LOGENTRIES_TOKEN= {
+    #'version': 1,
+     #   'disable_existing_loggers': False,    
+    
+'handlers': {
+    'logentries_handler': {
+        'token': os.getenv("LOGENTRIES_TOKEN"),
+        'class': 'logentries.LogentriesHandler'
+        },
+},
+
+'logentries': {
+    'handlers': ['logentries_handler'],
+    'level': 'INFO',
+    },
+}
+"""
+"""
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+},
+'handlers': {
+    'mail_admins': {
+        'level': 'ERROR',
+        'filters': ['require_debug_false'],
+        'class': 'django.utils.log.AdminEmailHandler'
+    }
+},
+'loggers': {
+    'django.request': {
+        'handlers': ['mail_admins'],
+        'level': 'INFO',
+        'propagate': True,
+        },
+}
+}
+"""
+LOGGING = {
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+            },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+            },
+        },    
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'C:\FBLoginProject\debug.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers':['file'],
+            'propagate': True,
+            'level':'DEBUG',
+            },
+        'FBAuth': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            },
+    }    
+}
+
+
 WSGI_APPLICATION = 'FBLogin.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 
 DATABASES = {
@@ -135,18 +213,22 @@ USE_TZ = True
 STATIC_URL = '/static/'
 SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
 SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
-FIELDS_STORED_IN_SESSION = ['login_type']
+SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['login_type']
+#FIELDS_STORED_IN_SESSION = ['login_type']
 LOGIN_ERROR_URL = '/login_error/'
+SOCIAL_AUTH_BACKEND_ERROR_URL = '/login_error/'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = True
 RAISE_EXCEPTIONS = True
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/succeeded/'
-SOCIAL_AUTH_LOGIN_URL = '/home/'
+SOCIAL_AUTH_LOGIN_URL = '/'
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/new_user/'
 
 SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/new_user/'
+
+
 
 
 SOCIAL_AUTH_PIPELINE = (
@@ -160,7 +242,6 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.associate_user',
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details',
-    #'FBAuth.facebook.last_check',
 )
 
 

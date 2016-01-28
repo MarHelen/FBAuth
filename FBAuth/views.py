@@ -6,8 +6,12 @@ from django.contrib.auth.models import User
 from django.template.context import RequestContext
 
 from django.core.urlresolvers import reverse
+import logging
+logger = logging.getLogger(__name__)
+
 
 def login(request, new_user = None, message = None):
+    logger.debug("I'm in login view, new_user = %s", new_user)
     if new_user:
         if new_user == 1: #new one
             message = 'Wellcome to our app!'
