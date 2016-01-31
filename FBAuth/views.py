@@ -10,13 +10,18 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def login(request, new_user = None, message = None):
+def login(request, new_user=None):
+    #new_user = kwargs.get('new_user')
     logger.debug("I'm in login view, new_user = %s", new_user)
+    message = 'Welcome to application!'
     if new_user:
         if new_user == 1: #new one
-            message = 'Wellcome to our app!'
-        if new_user == 2: #loggined
-            message = "Successfully logged in"    
+            message = 'Wellcome to our app! Thanks for registration'
+        else: 
+            if new_user == 2: #loggined
+                message = "Successfully logged in"
+            else:
+                message = new_user
     context = RequestContext(request, {
          'request': request, 'user': request.user, 'message' : message})
     return render_to_response('login.html', context_instance=context)

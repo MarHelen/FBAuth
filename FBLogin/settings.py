@@ -51,7 +51,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'FBAuth',
-    'social.apps.django_app.default',    
+    'social.apps.django_app.default',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -94,55 +94,14 @@ TEMPLATES = [
                 'django.core.context_processors.tz',                
                 'django.contrib.messages.context_processors.messages',
                 'social.apps.django_app.context_processors.backends',
-                'social.apps.django_app.context_processors.login_redirect',                
+                'social.apps.django_app.context_processors.login_redirect',   
+                #'social_auth.context_processors.social_auth_login_redirect',
             ],
         },
     },
 ]
 
-"""
-LOGENTRIES_TOKEN= {
-    #'version': 1,
-     #   'disable_existing_loggers': False,    
-    
-'handlers': {
-    'logentries_handler': {
-        'token': os.getenv("LOGENTRIES_TOKEN"),
-        'class': 'logentries.LogentriesHandler'
-        },
-},
 
-'logentries': {
-    'handlers': ['logentries_handler'],
-    'level': 'INFO',
-    },
-}
-"""
-"""
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-},
-'handlers': {
-    'mail_admins': {
-        'level': 'ERROR',
-        'filters': ['require_debug_false'],
-        'class': 'django.utils.log.AdminEmailHandler'
-    }
-},
-'loggers': {
-    'django.request': {
-        'handlers': ['mail_admins'],
-        'level': 'INFO',
-        'propagate': True,
-        },
-}
-}
-"""
 LOGGING = {
     'formatters': {
         'verbose': {
@@ -215,12 +174,18 @@ SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
 SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
 SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['login_type']
 #FIELDS_STORED_IN_SESSION = ['login_type']
+#FIELDS_STORED_IN_SESSION = ['key']
+SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/new_user/'
+LOGIN_REDIRECT_URL = '/succeeded/'
 LOGIN_ERROR_URL = '/login_error/'
 SOCIAL_AUTH_BACKEND_ERROR_URL = '/login_error/'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = True
 RAISE_EXCEPTIONS = True
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/succeeded/'
 SOCIAL_AUTH_LOGIN_URL = '/'
+
+SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
