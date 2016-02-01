@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # FBAuth
 This is a simple example of using facebook authentication with Django.
 python-social-auth module used.
@@ -10,3 +11,9 @@ The same redirection works for case, when Signup is chosen, but this social acco
 Authorization process implemented with custom pipline for checking if the user is new or not.
 
 DB is PostgreSQL based.
+=======
+# README #
+
+This is only the first step, I've done simple login function via python-social-auth. 
+User data doesn't store to the db yet, just login-logout. Continue working.
+>>>>>>> 5b729cbd3b945f369ac16b66a24388a9439b2ca5
