@@ -10,46 +10,32 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def login(request, new_user = None, message = None):
-    logger.debug("I'm in login view, new_user = %s", new_user)
+def login(request, new_user=None):
+    """
+    This is the main view function.
+    If the user is authorized, page with his/her name will be shown
+    If the user isn't, the page with 2 buttons: login and signup will be shown.
+    Function recieves parameter new_user, as a message or type of login.
+    """
+    logger.debug("From login view, new_user = %s", new_user)
+    message = 'Welcome to application!'
     if new_user:
         if new_user == 1: #new one
-            message = 'Wellcome to our app!'
-        if new_user == 2: #loggined
-            message = "Successfully logged in"    
+            message = 'Wellcome to our app! Thanks for registration'
+        else: 
+            if new_user == 2: #loggined
+                message = "Successfully logged in"
+            else:
+                message = new_user
     context = RequestContext(request, {
          'request': request, 'user': request.user, 'message' : message})
     return render_to_response('login.html', context_instance=context)
-    #return render(request, 'login.html')
-
-
-def logout(request):
-    auth_logout(request)
-    return redirect('/')
 
 @login_required(login_url='/')
-def home(request, new_user = None):
-    if new_user:
-        if new_user == 1: #new one
-            message = 'Wellcome to our app!'
-        if new_user == 2: #loggined
-            message = "Successfully logged in"
-     
-    context = RequestContext(request,
-                             {'request': request,
-                              'user': request.user,
-                              'message' : message})
-    return render_to_response('home.html',
-                              context_instance=context)
-"""
-def signup_confirm(request):
-    templ = Template ('''
-            <a href="{% url 'social:complete' 'facebook' %}?next={{ request.path }}">Are you sure to Sign Up with Facebook?</a>
-            <a href='/'>Cancel</a>''')
-    #if request.method == 'POST':
-    #    reverse('social:complete')    
-    
-    
-    return HttpResponse(templ.render(RequestContext(request)))    
-"""    
-    
+def logout(request):
+    """
+    This is a view function for simple django logout,
+    it's shown, when user was assotiated on the login page.
+    """
+    auth_logout(request)
+    return redirect('/')

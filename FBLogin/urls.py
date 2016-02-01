@@ -1,26 +1,24 @@
 from django.conf.urls.static import static
 from django.conf import settings
 
-from FBAuth.views import *
+from FBAuth.views import login, logout
 
 from django.conf.urls import include, url
 from django.conf.urls import patterns
 from django.contrib import admin
 
-from FBLogin.config import *
+#from FBLogin.config import *
 
 admin.autodiscover()
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url('', include('social.apps.django_app.urls', namespace='social')),
-    url('', include('django.contrib.auth.urls', namespace='auth')),
-    url(r'^$', 'FBAuth.views.login'),
-    url(r'^home/$', 'FBAuth.views.home'),
-    url(r'^logout/$', 'FBAuth.views.logout'),
-    url(r'^new_user/$', 'FBAuth.views.login', {'new_user' : 1}),
-    url(r'^succeeded/$', 'FBAuth.views.login', {'new_user' : 2}),
+    url(r'', include('social.apps.django_app.urls', namespace='social')),
+    url(r'', include('django.contrib.auth.urls', namespace='auth')),
+    url(r'^.*', login, name = 'login'),
+    url(r'^logout/.*', logout, name = 'FBAuth.views.logout'),
+    url(r'^/new_user/(?P<new_user>)/$', login, name = 'new_user' ),
+    url(r'^succeeded/.*', login, {'new_user' : 2}, name = 'succeeded' ),
     #url(r'^signup_confirm/$', 'FBAuth.views.signup_confirm'),
-    url(r'^login_error/$', 'FBAuth.views.login', {'message' : 'Error while attempt to login'}),
-)
+    url(r'^login_error/.*', login, {'new_user' : 'Error while attempt to login'}, name = 'login_error'),
+    ]

@@ -10,32 +10,16 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
 from config import *
 
-#from logentries import LogentriesHandler
 import logging
-
-
-
-
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'ls%&h$*_#y8@gy)lc4h)1%2aft4woro6y)n!ki6xb@e6=v4rrr'
 
-#from django.utils.crypto import get_random_string
-
-#chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
-#SECRET_KEY = get_random_string(50, chars)
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -51,7 +35,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'FBAuth',
-    'social.apps.django_app.default',    
+    'social.apps.django_app.default',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -65,7 +49,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
     'FBLogin.middleware.SocialAuthExceptionMiddleware',
-    #'social_auth.middleware.SocialAuthExceptionMiddleware',
 )
 
 
@@ -94,55 +77,13 @@ TEMPLATES = [
                 'django.core.context_processors.tz',                
                 'django.contrib.messages.context_processors.messages',
                 'social.apps.django_app.context_processors.backends',
-                'social.apps.django_app.context_processors.login_redirect',                
+                'social.apps.django_app.context_processors.login_redirect',   
             ],
         },
     },
 ]
 
-"""
-LOGENTRIES_TOKEN= {
-    #'version': 1,
-     #   'disable_existing_loggers': False,    
-    
-'handlers': {
-    'logentries_handler': {
-        'token': os.getenv("LOGENTRIES_TOKEN"),
-        'class': 'logentries.LogentriesHandler'
-        },
-},
 
-'logentries': {
-    'handlers': ['logentries_handler'],
-    'level': 'INFO',
-    },
-}
-"""
-"""
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-},
-'handlers': {
-    'mail_admins': {
-        'level': 'ERROR',
-        'filters': ['require_debug_false'],
-        'class': 'django.utils.log.AdminEmailHandler'
-    }
-},
-'loggers': {
-    'django.request': {
-        'handlers': ['mail_admins'],
-        'level': 'INFO',
-        'propagate': True,
-        },
-}
-}
-"""
 LOGGING = {
     'formatters': {
         'verbose': {
@@ -213,22 +154,20 @@ USE_TZ = True
 STATIC_URL = '/static/'
 SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
 SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
-SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['login_type']
-#FIELDS_STORED_IN_SESSION = ['login_type']
+SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['login_type'] #fiels stores in social session for access from custom pipeline's function
+SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/new_user/' #redirection for the case of new association after authorization 
+LOGIN_REDIRECT_URL = '/succeeded/' 
 LOGIN_ERROR_URL = '/login_error/'
-SOCIAL_AUTH_BACKEND_ERROR_URL = '/login_error/'
+SOCIAL_AUTH_BACKEND_ERROR_URL = '/login_error/' # redirection for the case of some errors after authorization 
 SOCIAL_AUTH_RAISE_EXCEPTIONS = True
 RAISE_EXCEPTIONS = True
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/succeeded/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/succeeded/' #redirection after succeeded authorization
 SOCIAL_AUTH_LOGIN_URL = '/'
 
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/new_user/'
-
-SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/new_user/'
-
-
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email'] #additional requesting parameter while associating
 
 
 SOCIAL_AUTH_PIPELINE = (
@@ -236,7 +175,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.social_uid',
     'social.pipeline.social_auth.auth_allowed',
     'social.pipeline.social_auth.social_user',
-    'FBAuth.facebook.check_if_exists',     
+    'FBAuth.facebook.check_if_exists',     #custom pipelines function from facebook.py
     'social.pipeline.user.get_username',
     'social.pipeline.user.create_user',
     'social.pipeline.social_auth.associate_user',
