@@ -78,6 +78,10 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social.apps.django_app.context_processors.backends',
                 'social.apps.django_app.context_processors.login_redirect',   
+<<<<<<< HEAD
+=======
+                #'social_auth.context_processors.social_auth_login_redirect',
+>>>>>>> be3fa6a7a31323f468e726ce99057468b8f27dda
             ],
         },
     },
@@ -154,9 +158,17 @@ USE_TZ = True
 STATIC_URL = '/static/'
 SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
 SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
+<<<<<<< HEAD
 SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['login_type'] #fiels stores in social session for access from custom pipeline's function
 SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/new_user/' #redirection for the case of new association after authorization 
 LOGIN_REDIRECT_URL = '/succeeded/' 
+=======
+SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['login_type']
+#FIELDS_STORED_IN_SESSION = ['login_type']
+#FIELDS_STORED_IN_SESSION = ['key']
+SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/new_user/'
+LOGIN_REDIRECT_URL = '/succeeded/'
+>>>>>>> be3fa6a7a31323f468e726ce99057468b8f27dda
 LOGIN_ERROR_URL = '/login_error/'
 SOCIAL_AUTH_BACKEND_ERROR_URL = '/login_error/' # redirection for the case of some errors after authorization 
 SOCIAL_AUTH_RAISE_EXCEPTIONS = True
@@ -166,6 +178,16 @@ SOCIAL_AUTH_LOGIN_URL = '/'
 
 SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
+<<<<<<< HEAD
+=======
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/new_user/'
+
+SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/new_user/'
+
+>>>>>>> be3fa6a7a31323f468e726ce99057468b8f27dda
 
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email'] #additional requesting parameter while associating
 

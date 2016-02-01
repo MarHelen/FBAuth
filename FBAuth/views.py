@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 def login(request, new_user=None):
+<<<<<<< HEAD
     """
     This is the main view function.
     If the user is authorized, page with his/her name will be shown
@@ -18,6 +19,10 @@ def login(request, new_user=None):
     Function recieves parameter new_user, as a message or type of login.
     """
     logger.debug("From login view, new_user = %s", new_user)
+=======
+    #new_user = kwargs.get('new_user')
+    logger.debug("I'm in login view, new_user = %s", new_user)
+>>>>>>> be3fa6a7a31323f468e726ce99057468b8f27dda
     message = 'Welcome to application!'
     if new_user:
         if new_user == 1: #new one

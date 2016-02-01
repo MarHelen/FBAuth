@@ -21,10 +21,17 @@
      {% endif %}
      <div class="container">
      <div  class="col-md-4">
+<<<<<<< HEAD
        <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}" ><img src='http://www.arcadeforge.io/assets/facebook_login-30508b4234d64d8a7294e2d32598137aad5a43ac7026ac419e05bd8c41c4b849.png'>  </a>
      </div>
      <div class="col-md-4">
        <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}" ><img src='http://active.eventjini.com/jaipurmarathon/images/signup_fb.png'></a>
+=======
+       <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}&login_type={{1}}" ><img src='http://www.arcadeforge.io/assets/facebook_login-30508b4234d64d8a7294e2d32598137aad5a43ac7026ac419e05bd8c41c4b849.png'>  </a>
+     </div>
+     <div class="col-md-4">
+       <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}&login_type={{2}}" ><img src='http://active.eventjini.com/jaipurmarathon/images/signup_fb.png'></a>
+>>>>>>> be3fa6a7a31323f468e726ce99057468b8f27dda
      </div>
      </div>
    {% endif %}
